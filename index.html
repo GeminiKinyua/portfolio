@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manasseh Kinyua - Business Intelligence Analyst</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 10000;
+            transition: all 0.1s ease;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 0;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #ff0080, #ffb347);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease 0.7s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+            animation: fadeInUp 1s ease 0.9s both;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #ff0080);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 0.5; }
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 120px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 4rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 80px;
+            background: linear-gradient(135deg, #ffffff, #00d4ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .about-highlight {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .skill-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 5px 0;
+            opacity: 0.8;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 212, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .project-description {
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tech-tag {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            margin-top: 60px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #ff0080);
+            border: none;
+            padding: 20px 50px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Contact Links */
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                top: 20px;
+                right: 20px;
+            }
+
+            nav a {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Manasseh Kinyua</h1>
+            <p>Transforming Data into Strategic Insights</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Clients Served</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">End Users</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">10M+</div>
+                    <div class="stat-label">Records Processed</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Particles -->
+        <div class="particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="top: 80%; left: 20%; animation-delay: 1s;"></div>
+        <div class="particle" style="top: 40%; left: 80%; animation-delay: 2s;"></div>
+        <div class="particle" style="top: 70%; left: 90%; animation-delay: 3s;"></div>
+        <div class="particle" style="top: 10%; left: 70%; animation-delay: 4s;"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a <span class="about-highlight">Business Intelligence Analyst</span> with 2+ years of experience delivering data-driven solutions across finance, retail, and healthcare sectors. Based in Nairobi, Kenya, I specialize in transforming complex datasets into actionable insights that drive strategic decision-making.</p>
+                
+                <p>My expertise lies in architecting scalable BI solutions using the <span class="about-highlight">Qlik ecosystem</span>, developing interactive dashboards that serve hundreds of users, and implementing automated ETL processes that handle millions of records monthly.</p>
+                
+                <p>I hold a <span class="about-highlight">Bachelor's in Statistics</span> from Mount Kenya University and am currently pursuing advanced certifications in Oracle Data Science and Google Machine Learning Engineering.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-title">Business Intelligence</div>
+                    <ul class="skill-list">
+                        <li>Qlik Sense & QlikView</li>
+                        <li>Power BI & Tableau</li>
+                        <li>Dashboard Development</li>
+                        <li>NPrinting</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-title">Data Science</div>
+                    <ul class="skill-list">
+                        <li>Python (Pandas, Scikit-learn)</li>
+                        <li>R Programming</li>
+                        <li>Machine Learning</li>
+                        <li>Statistical Modeling</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-title">Databases</div>
+                    <ul class="skill-list">
+                        <li>Oracle & MySQL</li>
+                        <li>PostgreSQL</li>
+                        <li>SQL Server</li>
+                        <li>Vector Databases</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-title">Real-Time Regulatory Reporting</div>
+                <div class="project-description">
+                    Architected a real-time data streaming infrastructure for a major banking client, enabling instant regulatory data submission to the central banking authority with 99.9% uptime.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Qlik Sense</span>
+                    <span class="tech-tag">Real-time ETL</span>
+                    <span class="tech-tag">Oracle</span>
+                    <span class="tech-tag">Banking</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-title">Hospital Revenue Analytics</div>
+                <div class="project-description">
+                    Led end-to-end implementation of Qlik Sense analytics platform for healthcare revenue cycle management, achieving 20% improvement in revenue cycle efficiency.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Healthcare</span>
+                    <span class="tech-tag">Revenue Analytics</span>
+                    <span class="tech-tag">Dashboard Design</span>
+                    <span class="tech-tag">Integration</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-title">Multi-Industry Analytics Platform</div>
+                <div class="project-description">
+                    Developed comprehensive analytics solutions serving 8 diverse clients across banking, retail, and manufacturing, achieving 40% reduction in time-to-insight.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Cross-Industry</span>
+                    <span class="tech-tag">Scalable Architecture</span>
+                    <span class="tech-tag">Performance Optimization</span>
+                    <span class="tech-tag">Multi-tenant</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-title">Petroleum Margins Analytics</div>
+                <div class="project-description">
+                    Designed and implemented margin analysis reporting system for petroleum distribution, including convenience store analytics for strategic decision-making.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Retail Analytics</span>
+                    <span class="tech-tag">Margin Analysis</span>
+                    <span class="tech-tag">Decision Support</span>
+                    <span class="tech-tag">Petroleum Industry</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="contact-content">
+            <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 40px;">
+                Ready to transform your data into strategic insights? Let's discuss how we can drive your business forward through intelligent analytics.
+            </p>
+            
+            <div class="contact-links">
+                <a href="mailto:manassehkinyua20@gmail.com" class="contact-link">
+                    <span>📧</span>
+                    <span>Email Me</span>
+                </a>
+                <a href="tel:+254112970098" class="contact-link">
+                    <span>📞</span>
+                    <span>Call Me</span>
+                </a>
+                <a href="#" class="contact-link">
+                    <span>🔗</span>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="#" class="contact-link">
+                    <span>💼</span>
+                    <span>GitHub</span>
+                </a>
+            </div>
+
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = (e.clientX + 8) + 'px';
+            cursorDot.style.top = (e.clientY + 8) + 'px';
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Parallax Effect for Background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const bgAnimation = document.querySelector('.bg-animation');
+            bgAnimation.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all project cards and skill categories
+        document.querySelectorAll('.project-card, .skill-category').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+
+        // Form Submission
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            form.reset();
+        });
+
+        // Dynamic cursor size on hover
+        document.querySelectorAll('a, button, .project-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+                cursor.style.background = 'rgba(0, 212, 255, 0.2)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.background = 'transparent';
+            });
+        });
+    </script>
+</body>
+</html>
